@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_app/core/services/geocoding_service.dart';
+import 'package:weather_app/models/city_location.dart';
 
 part 'saved_cities_provider.g.dart';
 

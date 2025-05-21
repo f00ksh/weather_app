@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/core/routes/app_routes.dart';
-import 'package:weather_app/core/services/geocoding_service.dart';
+import 'package:weather_app/models/city_location.dart';
 import 'package:weather_app/viewmodels/saved_cities_provider.dart';
 import 'package:weather_app/viewmodels/search_provider.dart';
 import 'package:weather_app/viewmodels/weather_view_model.dart';
@@ -16,7 +16,7 @@ class SavedCityItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Get weather data for this city
     final weatherAsync = ref.watch(
-      CityWeatherProviderProvider(city.latitude, city.longitude),
+      CityWeatherProvider(city.latitude, city.longitude),
     );
     final errorColor = Theme.of(context).colorScheme.errorContainer;
     final onErrorContainer = Theme.of(context).colorScheme.onErrorContainer;

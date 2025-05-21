@@ -4,10 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/core/routes/app_routes.dart';
 import 'package:weather_app/core/theme/app_dimension.dart';
 import 'package:weather_app/core/theme/theme_provider.dart';
+import 'package:weather_app/services/background_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: MyApp()));
+
+  runApp(
+    ProviderScope(
+      observers: [
+        // ... existing observers if any
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends ConsumerWidget {
@@ -15,6 +24,9 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Initialize weather notifications
+    ref.watch(weatherNotificationsProvider);
+
     // Watch the theme mode provider to get the current theme mode
     final themeMode = ref.watch(themeModeProvider);
 

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:weather_app/core/services/geocoding_service.dart';
+import 'package:weather_app/models/city_location.dart';
+import 'package:weather_app/services/geocoding_service.dart';
 
 part 'search_provider.g.dart';
 

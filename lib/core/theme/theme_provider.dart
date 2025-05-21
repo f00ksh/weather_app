@@ -54,7 +54,7 @@ ThemeMode themeMode(Ref ref) {
 
   // Handle day/night mode based on weather
   return ref
-      .watch(weatherViewModelProvider)
+      .watch(weatherProvider)
       .when(
         data:
             (weather) => _isDaytime(weather) ? ThemeMode.light : ThemeMode.dark,
@@ -67,7 +67,7 @@ ThemeMode themeMode(Ref ref) {
 @riverpod
 ThemeData theme(Ref ref) {
   return ref
-      .watch(weatherViewModelProvider)
+      .watch(weatherProvider)
       .when(
         data:
             (weather) =>

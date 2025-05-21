@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_app/models/city_location.dart';
 import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/core/routes/app_routes.dart';
-import 'package:weather_app/core/services/geocoding_service.dart';
 import 'package:weather_app/core/theme/weather_visuals.dart';
 import 'package:weather_app/viewmodels/saved_cities_provider.dart';
 import 'package:weather_app/viewmodels/search_provider.dart';
@@ -21,7 +21,7 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final weatherAsync = ref.watch(weatherViewModelProvider);
+    final weatherAsync = ref.watch(weatherProvider);
     final selectedCity = ref.watch(selectedCityFromSearchProvider);
     final savedCities = ref.watch(savedCitiesProvider);
 
@@ -72,7 +72,7 @@ class HomePage extends ConsumerWidget {
           child: RefreshIndicator.adaptive(
             edgeOffset: 25,
             displacement: 75,
-            onRefresh: () async => ref.invalidate(weatherViewModelProvider),
+            onRefresh: () async => ref.invalidate(weatherProvider),
             child:
                 _isTabletLayout(context)
                     ? _buildTabletLayout(
@@ -118,7 +118,7 @@ class HomePage extends ConsumerWidget {
         decoration: BoxDecoration(gradient: WeatherVisuals.getGradient(0)),
         child: ErrorView(
           message: error.toString(),
-          onRetry: () => ref.invalidate(weatherViewModelProvider),
+          onRetry: () => ref.invalidate(weatherProvider),
         ),
       ),
     );

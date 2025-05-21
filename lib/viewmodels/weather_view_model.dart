@@ -1,11 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:weather_app/models/weather_model.dart';
-import 'package:weather_app/core/services/weather_cache_service.dart';
-import 'package:weather_app/core/services/weather_service.dart';
+import 'package:weather_app/services/weather_cache_service.dart';
+import 'package:weather_app/services/weather_service.dart';
 import 'package:weather_app/viewmodels/location_provider.dart';
 import 'package:weather_app/viewmodels/search_provider.dart';
 
@@ -18,7 +17,7 @@ WeatherCacheService weatherCacheService(Ref ref) {
 }
 
 @riverpod
-class WeatherViewModel extends _$WeatherViewModel {
+class Weather extends _$Weather {
   @override
   FutureOr<WeatherModel> build() async {
     // Get the weather service
@@ -102,7 +101,7 @@ class WeatherViewModel extends _$WeatherViewModel {
 ///// Provider for the cities weather service//////
 
 @riverpod
-class CityWeatherProvider extends _$CityWeatherProvider {
+class CityWeather extends _$CityWeather {
   @override
   FutureOr<WeatherModel> build(double latitude, double longitude) async {
     final weatherService = ref.read(weatherServiceProvider);
@@ -114,7 +113,6 @@ class CityWeatherProvider extends _$CityWeatherProvider {
     // Try to get cached data first
     final cachedWeather = await cacheService.getCachedWeatherData(locationId);
     if (cachedWeather != null) {
-      debugPrint('CityWeatherProvider: Using cached data for $locationId');
       return cachedWeather;
     }
 
@@ -145,7 +143,6 @@ class CurrentLocationWeatherProvider extends _$CurrentLocationWeatherProvider {
     // Try to get cached data first
     final cachedWeather = await cacheService.getCachedWeatherData(locationId);
     if (cachedWeather != null) {
-      debugPrint('CurrentLocationWeatherProvider: Using cached data');
       return cachedWeather;
     }
 

@@ -8,8 +8,7 @@ class LocationService {
     LocationPermission permission;
 
     // Check if location services are enabled
-    serviceEnabled =
-        await GeolocatorPlatform.instance.isLocationServiceEnabled();
+    serviceEnabled = await GeolocatorPlatform.instance.isLocationServiceEnabled();
     if (!serviceEnabled) {
       // Location services are not enabled
       return false;
@@ -43,7 +42,10 @@ class LocationService {
       }
 
       final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.high,
+          timeLimit: Duration(seconds: 5),
+        ),
       );
 
       return position;
@@ -53,15 +55,9 @@ class LocationService {
   }
 
   // Reverse geocode coordinates to city name using the geocoding package
-  Future<String> getCityFromCoordinates(
-    double latitude,
-    double longitude,
-  ) async {
+  Future<String> getCityFromCoordinates(double latitude, double longitude) async {
     try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-        latitude,
-        longitude,
-      );
+      List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
 
       if (placemarks.isNotEmpty) {
         Placemark place = placemarks.first;

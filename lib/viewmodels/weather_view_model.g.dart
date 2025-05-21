@@ -26,25 +26,22 @@ final weatherCacheServiceProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef WeatherCacheServiceRef = AutoDisposeProviderRef<WeatherCacheService>;
-String _$weatherViewModelHash() => r'94d33da83b541ed5c8abf72d008c78b00baa7c01';
+String _$weatherHash() => r'e0b04f7282ff15cb48bdde5def75847fdaad4204';
 
-/// See also [WeatherViewModel].
-@ProviderFor(WeatherViewModel)
-final weatherViewModelProvider =
-    AutoDisposeAsyncNotifierProvider<WeatherViewModel, WeatherModel>.internal(
-      WeatherViewModel.new,
-      name: r'weatherViewModelProvider',
+/// See also [Weather].
+@ProviderFor(Weather)
+final weatherProvider =
+    AutoDisposeAsyncNotifierProvider<Weather, WeatherModel>.internal(
+      Weather.new,
+      name: r'weatherProvider',
       debugGetCreateSourceHash:
-          const bool.fromEnvironment('dart.vm.product')
-              ? null
-              : _$weatherViewModelHash,
+          const bool.fromEnvironment('dart.vm.product') ? null : _$weatherHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$WeatherViewModel = AutoDisposeAsyncNotifier<WeatherModel>;
-String _$cityWeatherProviderHash() =>
-    r'5a91c6e407504ef513619096bbfbb5f25c579f63';
+typedef _$Weather = AutoDisposeAsyncNotifier<WeatherModel>;
+String _$cityWeatherHash() => r'356b5f2a1819aa790aac9104b1e41e8cf1f438dc';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -67,7 +64,7 @@ class _SystemHash {
   }
 }
 
-abstract class _$CityWeatherProvider
+abstract class _$CityWeather
     extends BuildlessAutoDisposeAsyncNotifier<WeatherModel> {
   late final double latitude;
   late final double longitude;
@@ -77,29 +74,29 @@ abstract class _$CityWeatherProvider
 
 ///// Provider for the cities weather service//////
 ///
-/// Copied from [CityWeatherProvider].
-@ProviderFor(CityWeatherProvider)
-const cityWeatherProviderProvider = CityWeatherProviderFamily();
+/// Copied from [CityWeather].
+@ProviderFor(CityWeather)
+const cityWeatherProvider = CityWeatherFamily();
 
 ///// Provider for the cities weather service//////
 ///
-/// Copied from [CityWeatherProvider].
-class CityWeatherProviderFamily extends Family<AsyncValue<WeatherModel>> {
+/// Copied from [CityWeather].
+class CityWeatherFamily extends Family<AsyncValue<WeatherModel>> {
   ///// Provider for the cities weather service//////
   ///
-  /// Copied from [CityWeatherProvider].
-  const CityWeatherProviderFamily();
+  /// Copied from [CityWeather].
+  const CityWeatherFamily();
 
   ///// Provider for the cities weather service//////
   ///
-  /// Copied from [CityWeatherProvider].
-  CityWeatherProviderProvider call(double latitude, double longitude) {
-    return CityWeatherProviderProvider(latitude, longitude);
+  /// Copied from [CityWeather].
+  CityWeatherProvider call(double latitude, double longitude) {
+    return CityWeatherProvider(latitude, longitude);
   }
 
   @override
-  CityWeatherProviderProvider getProviderOverride(
-    covariant CityWeatherProviderProvider provider,
+  CityWeatherProvider getProviderOverride(
+    covariant CityWeatherProvider provider,
   ) {
     return call(provider.latitude, provider.longitude);
   }
@@ -116,41 +113,36 @@ class CityWeatherProviderFamily extends Family<AsyncValue<WeatherModel>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'cityWeatherProviderProvider';
+  String? get name => r'cityWeatherProvider';
 }
 
 ///// Provider for the cities weather service//////
 ///
-/// Copied from [CityWeatherProvider].
-class CityWeatherProviderProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          CityWeatherProvider,
-          WeatherModel
-        > {
+/// Copied from [CityWeather].
+class CityWeatherProvider
+    extends AutoDisposeAsyncNotifierProviderImpl<CityWeather, WeatherModel> {
   ///// Provider for the cities weather service//////
   ///
-  /// Copied from [CityWeatherProvider].
-  CityWeatherProviderProvider(double latitude, double longitude)
+  /// Copied from [CityWeather].
+  CityWeatherProvider(double latitude, double longitude)
     : this._internal(
         () =>
-            CityWeatherProvider()
+            CityWeather()
               ..latitude = latitude
               ..longitude = longitude,
-        from: cityWeatherProviderProvider,
-        name: r'cityWeatherProviderProvider',
+        from: cityWeatherProvider,
+        name: r'cityWeatherProvider',
         debugGetCreateSourceHash:
             const bool.fromEnvironment('dart.vm.product')
                 ? null
-                : _$cityWeatherProviderHash,
-        dependencies: CityWeatherProviderFamily._dependencies,
-        allTransitiveDependencies:
-            CityWeatherProviderFamily._allTransitiveDependencies,
+                : _$cityWeatherHash,
+        dependencies: CityWeatherFamily._dependencies,
+        allTransitiveDependencies: CityWeatherFamily._allTransitiveDependencies,
         latitude: latitude,
         longitude: longitude,
       );
 
-  CityWeatherProviderProvider._internal(
+  CityWeatherProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -165,17 +157,15 @@ class CityWeatherProviderProvider
   final double longitude;
 
   @override
-  FutureOr<WeatherModel> runNotifierBuild(
-    covariant CityWeatherProvider notifier,
-  ) {
+  FutureOr<WeatherModel> runNotifierBuild(covariant CityWeather notifier) {
     return notifier.build(latitude, longitude);
   }
 
   @override
-  Override overrideWith(CityWeatherProvider Function() create) {
+  Override overrideWith(CityWeather Function() create) {
     return ProviderOverride(
       origin: this,
-      override: CityWeatherProviderProvider._internal(
+      override: CityWeatherProvider._internal(
         () =>
             create()
               ..latitude = latitude
@@ -192,14 +182,14 @@ class CityWeatherProviderProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<CityWeatherProvider, WeatherModel>
+  AutoDisposeAsyncNotifierProviderElement<CityWeather, WeatherModel>
   createElement() {
-    return _CityWeatherProviderProviderElement(this);
+    return _CityWeatherProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is CityWeatherProviderProvider &&
+    return other is CityWeatherProvider &&
         other.latitude == latitude &&
         other.longitude == longitude;
   }
@@ -216,8 +206,7 @@ class CityWeatherProviderProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin CityWeatherProviderRef
-    on AutoDisposeAsyncNotifierProviderRef<WeatherModel> {
+mixin CityWeatherRef on AutoDisposeAsyncNotifierProviderRef<WeatherModel> {
   /// The parameter `latitude` of this provider.
   double get latitude;
 
@@ -225,23 +214,19 @@ mixin CityWeatherProviderRef
   double get longitude;
 }
 
-class _CityWeatherProviderProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          CityWeatherProvider,
-          WeatherModel
-        >
-    with CityWeatherProviderRef {
-  _CityWeatherProviderProviderElement(super.provider);
+class _CityWeatherProviderElement
+    extends AutoDisposeAsyncNotifierProviderElement<CityWeather, WeatherModel>
+    with CityWeatherRef {
+  _CityWeatherProviderElement(super.provider);
 
   @override
-  double get latitude => (origin as CityWeatherProviderProvider).latitude;
+  double get latitude => (origin as CityWeatherProvider).latitude;
   @override
-  double get longitude => (origin as CityWeatherProviderProvider).longitude;
+  double get longitude => (origin as CityWeatherProvider).longitude;
 }
 
 String _$currentLocationWeatherProviderHash() =>
-    r'c4814129ab684378a2240136caea31cb22b866e4'; //// Provider for the current location weather service //////
+    r'0fa302be63e4f2fe6377a2e672177ceed9bc9ea1'; //// Provider for the current location weather service //////
 ///
 /// Copied from [CurrentLocationWeatherProvider].
 @ProviderFor(CurrentLocationWeatherProvider)

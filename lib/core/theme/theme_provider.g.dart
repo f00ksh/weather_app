@@ -6,7 +6,7 @@ part of 'theme_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$themeModeHash() => r'21a0b5cb313ded7f30fb3a5fee134c62fa5da4b9';
+String _$themeModeHash() => r'd6b0711529f33053d8add048796bbdd0f86cfcc7';
 
 /// Provider that determines the app theme mode based on various factors
 ///
@@ -24,7 +24,7 @@ final themeModeProvider = AutoDisposeProvider<ThemeMode>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ThemeModeRef = AutoDisposeProviderRef<ThemeMode>;
-String _$themeHash() => r'10c5fb7c2cad11a52fb53cceb362f6149d3f07d6';
+String _$themeHash() => r'eca54a9293e5ad077ab643729af96c5eb2d106ea';
 
 /// Provider that determines the app theme based on sunrise and sunset times
 ///

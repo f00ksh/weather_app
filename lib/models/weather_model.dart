@@ -1,4 +1,6 @@
 import 'package:open_meteo/open_meteo.dart';
+import 'package:weather_app/models/daily_forcast.dart';
+import 'package:weather_app/models/hourly_forcast.dart';
 
 class WeatherModel {
   // Weather fields
@@ -260,119 +262,5 @@ class WeatherModel {
     }
 
     return forecasts;
-  }
-}
-
-class HourlyForecast {
-  final DateTime time;
-  final double temperature;
-  final int weatherCode;
-  final double? visibility;
-  final double? windDirection;
-  final double? windSpeed;
-  final double? uvIndex;
-  final bool? isDay;
-  final double? precipitation;
-  final double? humidity;
-
-  HourlyForecast({
-    required this.time,
-    required this.temperature,
-    required this.weatherCode,
-    this.visibility,
-    this.windDirection,
-    this.windSpeed,
-    this.uvIndex,
-    this.isDay,
-    this.precipitation,
-    this.humidity,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'time': time.millisecondsSinceEpoch,
-      'temperature': temperature,
-      'weatherCode': weatherCode,
-      'visibility': visibility,
-      'windDirection': windDirection,
-      'windSpeed': windSpeed,
-      'uvIndex': uvIndex,
-      'isDay': isDay,
-      'precipitation': precipitation,
-      'humidity': humidity,
-    };
-  }
-
-  factory HourlyForecast.fromJson(Map<String, dynamic> json) {
-    return HourlyForecast(
-      time: DateTime.fromMillisecondsSinceEpoch(json['time'] as int),
-      temperature: json['temperature'] as double,
-      weatherCode: json['weatherCode'] as int,
-      visibility: json['visibility'] as double?,
-      windDirection: json['windDirection'] as double?,
-      windSpeed: json['windSpeed'] as double?,
-      uvIndex: json['uvIndex'] as double?,
-      isDay: json['isDay'] as bool?,
-      precipitation: json['precipitation'] as double?,
-      humidity: json['humidity'] as double?,
-    );
-  }
-}
-
-class DailyForecast {
-  final DateTime date;
-  final double maxTemperature;
-  final double minTemperature;
-  final DateTime? sunrise;
-  final DateTime? sunset;
-  final int? code;
-  final double? windSpeedMaxDaily;
-  final double? precipitationSum;
-  final double? uvIndexMax;
-
-  DailyForecast({
-    required this.date,
-    required this.maxTemperature,
-    required this.minTemperature,
-    this.sunrise,
-    this.sunset,
-    this.code,
-    this.windSpeedMaxDaily,
-    this.precipitationSum,
-    this.uvIndexMax,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'date': date.millisecondsSinceEpoch,
-      'maxTemperature': maxTemperature,
-      'minTemperature': minTemperature,
-      'sunrise': sunrise?.millisecondsSinceEpoch,
-      'sunset': sunset?.millisecondsSinceEpoch,
-      'code': code,
-      'windSpeedMaxDaily': windSpeedMaxDaily,
-      'precipitationSum': precipitationSum,
-      'uvIndexMax': uvIndexMax,
-    };
-  }
-
-  factory DailyForecast.fromJson(Map<String, dynamic> json) {
-    return DailyForecast(
-      date: DateTime.fromMillisecondsSinceEpoch(json['date'] as int),
-      maxTemperature: json['maxTemperature'] as double,
-      minTemperature: json['minTemperature'] as double,
-      sunrise:
-          json['sunrise'] != null
-              ? DateTime.fromMillisecondsSinceEpoch(json['sunrise'] as int)
-              : null,
-      sunset:
-          json['sunset'] != null
-              ? DateTime.fromMillisecondsSinceEpoch(json['sunset'] as int)
-              : null,
-      code: json['code'] as int?,
-      windSpeedMaxDaily: json['windSpeedMaxDaily'] as double?,
-      precipitationSum: json['precipitationSum'] as double?,
-      uvIndexMax: json['uvIndexMax'] as double?,
-    );
   }
 }

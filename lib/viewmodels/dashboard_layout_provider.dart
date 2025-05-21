@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,10 +28,6 @@ class DashboardWidgetItem {
       crossAxisCellCount: json['crossAxisCellCount'],
     );
   }
-
-  @override
-  String toString() =>
-      'DashboardWidgetItem(key: $key, main: $mainAxisCellCount, cross: $crossAxisCellCount)';
 }
 
 // Define the provider
@@ -40,7 +35,6 @@ class DashboardLayoutNotifier extends StateNotifier<List<DashboardWidgetItem>> {
   static const String _prefsKey = 'dashboard_layout';
 
   DashboardLayoutNotifier() : super([]) {
-    debugPrint('DashboardLayoutNotifier: Initializing...');
     // Initialize with empty list, then immediately load saved layout or default
     _initializeLayout();
   }
@@ -51,17 +45,14 @@ class DashboardLayoutNotifier extends StateNotifier<List<DashboardWidgetItem>> {
     if (savedLayout != null && savedLayout.isNotEmpty) {
       // Use saved layout if available
       state = savedLayout;
-      debugPrint('DashboardLayoutNotifier: Initialized with saved layout');
     } else {
       // Fallback to default layout
       state = _getDefaultLayout();
-      debugPrint('DashboardLayoutNotifier: Initialized with default layout');
     }
   }
 
   // Default layout - matches your current order
   static List<DashboardWidgetItem> _getDefaultLayout() {
-    debugPrint('DashboardLayoutNotifier: Creating default layout');
     return [
       DashboardWidgetItem(
         key: 'daily_forecast',
@@ -127,57 +118,31 @@ class DashboardLayoutNotifier extends StateNotifier<List<DashboardWidgetItem>> {
 
   // Save the current layout to SharedPreferences
   Future<void> _saveLayout() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final jsonList = state.map((item) => item.toJson()).toList();
-      final jsonString = jsonEncode(jsonList);
-      await prefs.setString(_prefsKey, jsonString);
-
-      // Debug: Log the saved layout with item keys
-      final itemKeys = state.map((item) => item.key).toList();
-      debugPrint(
-        'DashboardLayoutNotifier: Layout saved successfully with order: $itemKeys',
-      );
-    } catch (e) {
-      debugPrint('DashboardLayoutNotifier: Error saving layout - $e');
-    }
+    final prefs = await SharedPreferences.getInstance();
+    final jsonList = state.map((item) => item.toJson()).toList();
+    final jsonString = jsonEncode(jsonList);
+    await prefs.setString(_prefsKey, jsonString);
   }
 
   // Load saved layout from SharedPreferences
   Future<List<DashboardWidgetItem>?> _loadSavedLayout() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final jsonString = prefs.getString(_prefsKey);
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString(_prefsKey);
 
-      if (jsonString != null) {
-        final jsonList = jsonDecode(jsonString) as List;
-        final loadedItems =
-            jsonList.map((json) => DashboardWidgetItem.fromJson(json)).toList();
+    if (jsonString != null) {
+      final jsonList = jsonDecode(jsonString) as List;
+      final loadedItems =
+          jsonList.map((json) => DashboardWidgetItem.fromJson(json)).toList();
 
-        if (loadedItems.isNotEmpty) {
-          // Debug: Log the loaded layout with item keys
-          final itemKeys = loadedItems.map((item) => item.key).toList();
-          debugPrint(
-            'DashboardLayoutNotifier: Loaded saved layout with order: $itemKeys',
-          );
-
-          return loadedItems;
-        }
-      } else {
-        debugPrint(
-          'DashboardLayoutNotifier: No saved layout found in SharedPreferences',
-        );
+      if (loadedItems.isNotEmpty) {
+        return loadedItems;
       }
-      return null;
-    } catch (e) {
-      debugPrint('DashboardLayoutNotifier: Error loading layout - $e');
-      return null;
     }
+    return null;
   }
 
   // Reset to default layout
   void resetToDefault() {
-    debugPrint('DashboardLayoutNotifier: Resetting to default layout');
     state = _getDefaultLayout();
     _saveLayout();
   }
